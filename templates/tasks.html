@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+    <style>
+        .important { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+    <form method="POST" action="/tasks">
+        <input type="text" name="content" placeholder="Add new task" required>
+        <button type="submit">Add Task</button>
+    </form>
+    <ul>
+        {% for task in tasks %}
+            <li class="{{ 'important' if task['is_important'] else '' }}">
+                {{ task['content'] }}
+                <a href="/delete/{{ task['id'] }}">Delete</a>
+                <a href="/update/{{ task['id'] }}">Update</a>
+                <!-- Toggle between Mark Important and Mark Unimportant -->
+                <a href="/mark_important/{{ task['id'] }}">
+                    {% if task['is_important'] %}
+                        Mark Unimportant
+                    {% else %}
+                        Mark Important
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
